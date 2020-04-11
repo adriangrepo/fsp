@@ -1,0 +1,39 @@
+##
+# updates the APT package cache and install packages
+# servers necessary for web. also enables firewall
+##
+- name: Run the equivalent of "apt-get update" as a separate step
+  become: true
+  apt: 
+    update_cache: yes
+
+- name: ensure web server packages are installed
+  become: true
+  apt: 
+    pkg:
+      - python3-venv
+      - python3.7-dev
+      - python3-apt
+
+- name: enable SSH in firewall
+  become: true
+  ufw: 
+    rule: allow 
+    port: "22"
+
+- name: enable HTTP connections for web server
+  become: true
+  ufw: 
+    rule: allow 
+    port: "80"
+
+- name: enable HTTPS connections for web server
+  become: true
+  ufw: 
+    rule: allow 
+    port: "443"
+
+- name: enable firewall
+  become: true
+  ufw: 
+    state: enabled

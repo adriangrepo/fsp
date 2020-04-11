@@ -1,0 +1,2 @@
+- name: Manually create the initial virtualenv
+  command: virtualenv {{ venv_dir }} -p python3.7 creates={{ venv_dir }}

@@ -1,0 +1,24 @@
+###
+# setup db users
+#
+
+
+# mongodb webapp user
+- mongodb_user:
+    database: "{{ mongodb_name }}"
+    name: "{{ mongodb_user_name }}"
+    password: "{{ mongodb_user_password }}"
+    roles: readWrite,dbAdmin,userAdmin
+    state: present
+
+# mongodb admin setup
+- mongodb_user:
+    database: admin
+    name: "{{ mongodb_user_admin_name }}"
+    password: "{{ mongodb_user_admin_password }}"
+    login_port: "{{ mongoc_port }}"
+    update_password: on_create
+    roles: userAdminAnyDatabase
+    state: present
+  ignore_errors: no
+

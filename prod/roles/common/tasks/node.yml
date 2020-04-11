@@ -1,0 +1,21 @@
+
+- name: Install node dependencies
+  become: true
+  apt:
+    pkg: 
+    - git
+    - curl
+    - build-essential
+    - libssl-dev
+
+- name: Install nvm
+  shell: >
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/{{nvm_git_version}}/install.sh | bash
+    creates=~/.nvm/nvm.sh
+
+- name: Install node and set version
+  shell: >
+    /bin/bash -c "source ~/.profile && nvm install {{ nvm_node_version }} && nvm alias default {{ nvm_node_version }}"
+    creates=~/.nvm/alias
+
+

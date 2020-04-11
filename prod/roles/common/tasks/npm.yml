@@ -1,0 +1,25 @@
+###
+# Runs node build script
+##
+
+- name: change npm install file permission
+  file:
+    path: "{{ frontend_path }}/{{npm_install_script}}"
+    mode: u+x
+
+- name: npm install
+  shell: "cd {{ frontend_path }} && {{ frontend_path }}/{{npm_install_script}}"
+
+- name: change npm build file permission
+  file:
+    path: "{{ frontend_path }}/{{npm_build_prod_script}}"
+    mode: u+x
+
+- name: npm build
+  shell: "cd {{ frontend_path }} && {{ frontend_path }}/{{npm_build_prod_script}}"
+
+
+
+
+
+

@@ -1,0 +1,34 @@
+###
+# Installs and configures the MongoDB database
+#
+
+    
+- name: install mongoDB
+  become: true
+  apt: 
+    name: mongodb
+    state: present
+    update_cache: yes
+
+- name: copy config file
+  become: true
+  copy:
+    src: "{{ mongodb_conf }}"
+    dest: /etc/mongodb.conf
+    owner: "{{ deploy_user }}"
+    group: "{{ deploy_group }}"
+    mode: 0644
+
+- name: restart mongodb
+  become: true
+  service: 
+    name: mongodb 
+    state: restarted
+
+- name: Ensure mongodb is running and and enabled to start automatically on reboots
+  become: true
+  systemd:
+    name: mongodb
+    enabled: yes
+    state: started
+

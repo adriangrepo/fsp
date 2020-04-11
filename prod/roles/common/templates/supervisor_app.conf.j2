@@ -1,0 +1,12 @@
+[program:{{ app_name }}]
+loglevel=debug
+environment={% for k, v in asgi_env_vars.items() %}{% if not loop.first %},{% endif %}{{ k }}="{{ v }}"{% endfor %}
+
+command={{ venv_dir }}/bin/uvicorn app:app
+directory={{ uvicorn_app_run_path }}
+user={{ deploy_user }}
+autostart=true
+autorestart=true
+redirect_stderr=True
+
+#NB dont use quotes in supervisor command

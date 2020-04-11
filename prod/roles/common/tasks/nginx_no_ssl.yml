@@ -1,0 +1,32 @@
+###
+# Configuration for Nginx web server without HTTPS
+##
+#- debug: var=ansible_facts
+- debug: var=hostvars
+
+
+- name: ensure Nginx is installed via the system package
+  become: true
+  apt: 
+    name: nginx 
+    state: present 
+    update_cache: yes
+
+- name: ensure default symbolic linked website is deleted
+  become: true
+  file: 
+    path: /etc/nginx/sites-enabled/default 
+    state: absent
+
+- name: write non-SSL nginx configuration
+  become: true
+  template: 
+    src: nginx_no_ssl.conf.j2
+    dest: "/etc/nginx/conf.d/{{ app_name }}.conf"
+
+- name: restart nginx
+  become: true
+  service: 
+    name: nginx 
+    state: restarted
+  

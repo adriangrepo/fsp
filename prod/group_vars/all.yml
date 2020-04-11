@@ -1,0 +1,81 @@
+local_fsp_path: local_path_to_this_project
+local_app_path: local_path_to_webapp
+
+# Limit installs to when required
+initial_setup: true
+
+# Operating System (Ubuntu)
+app_name: app_name
+deploy_user: non_root_user
+deploy_group: non_root_user_group
+## local directory with SSH keys and known_hosts file, no trailing slash
+ssh_dir: "{{fsp_path}}/ssh_keys"
+ansible_sudo_pass: "some_password"
+
+
+# Web Servers
+## deploy_ssl true for HTTPS, false for only HTTP
+deploy_ssl: false
+asgi_host: 'localhost'
+asgi_server_port: 8000
+fqdn: webapp_domain_name_without_www
+app_path: "/home/{{deploy_user}}/{{app_name}}"
+## local directory SSL certificates, no trailing slash
+ssl_certs_dir: "{{local_fsp_path}}/ssl_cert"
+frontend_path: "{{ app_path }}/path_to_frontend"
+static_file_path: "{{ frontend_path }}/dist"
+
+# lets encrypt ssl setup
+letsencrypt_email: email_address
+
+
+# Source Control
+## deploy_key, no trailing slash
+local_deploy_key_dir: "{{local_fsp_path}}/deploy_key"
+code_repository: ssh://git@github.com/repository_name.git
+
+
+# Databases - change for Postres
+mongodb_conf: "/etc/mongod.conf"
+mongodb_prod_name: "db_name"
+mongodb_prod_user_name: "db_user_name"
+mongodb_prod_user_password: 'db_user_password'
+mongodb_user_admin_name: "admin_name"
+mongodb_user_admin_password: "db_admin_password"
+
+
+# Application Dependencies
+venv_dir: "/home/{{ deploy_user }}/.virtualenvs/{{ app_name }}"
+venv_python: "{{venv_dir}}/bin/python_version"
+requirements_file: "{{ local_app_path}}/requirements.txt"
+asgi_env_vars: {
+    "webapp_specific key: value pairs go here"
+}
+uvicorn_app_run_path: "{{ app_path }}/webapp_path"
+
+# Data
+local_data_path: "{{ local_app_path }}/local_data_path"
+
+# Node
+nvm_git_version: "v0.35.3"
+nvm_node_version: "0.12"
+
+# ASGI Server
+# no vars
+
+# npm build
+
+npm_install_script: "npm_install.sh"
+npm_build_prod_script: "npm_build_prod.sh"
+
+# Task queues
+#deployment_alert: true
+## your phone number that should receive a deployment complete
+## text message. example format: "+19735551234"
+#alert_number: ""
+
+
+# Continuous Integration
+## this grabs the sudo password for the deployer user
+## from an environment variable called REMOTE_DEPLOYER_PASSWORD
+#deploy_user_password: "{{ lookup('env', 'REMOTE_DEPLOYER_PASSWORD') }}"

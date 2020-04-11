@@ -1,0 +1,32 @@
+###
+# Handles application dependencies and environment variables
+# Also syncs the application with the database schema
+##
+
+- name: create virtualenv directory if it does not already exist
+  file:
+    path: "{{ venv_dir }}"
+    state: directory
+
+- name: copy requirements
+  copy:
+    src: "{{ requirements_file }}"
+    dest: "{{ app_path }}/requirements.txt"
+    owner: "{{ deploy_user }}"
+    group: "{{ deploy_group }}"
+
+- name: install dependencies into a new virtualenv
+  pip:
+    requirements: "{{ app_path }}/requirements.txt"
+    virtualenv: "{{ venv_dir }}"
+    virtualenv_python: python3
+
+- name: create .env file in base directory of the app from template
+  template:
+    src: env.j2
+    dest: "{{ app_path }}/.env"
+
+
+
+
+

@@ -1,0 +1,7 @@
+# sync data to server
+
+- name: Synchronization of data on the control machine to dest on the remote hosts
+  synchronize:
+    src: "{{ local_data_path }}"
+    dest: "{{ app_path }}"
+

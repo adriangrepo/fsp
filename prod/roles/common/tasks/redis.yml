@@ -1,0 +1,11 @@
+###
+# Installs and configures Redis
+##
+- name: ensure redis package is installed
+  become: true
+  apt: 
+    name: redis-server 
+    state: present
+    update_cache: yes
+
+

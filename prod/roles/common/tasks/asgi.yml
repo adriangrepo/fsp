@@ -1,0 +1,39 @@
+###
+# Sets up and configures Supervisor which runs ASGI server
+##
+
+- name: asgi ensure Supervisor is installed via the system package
+  become: true
+  apt: 
+    name: supervisor 
+    state: present 
+    update_cache: yes
+
+
+- name: asgi create Supervisor template for the ASGI app to run
+  become: true
+  template: 
+    src: supervisor_app.conf.j2
+    dest: "/etc/supervisor/conf.d/{{ app_name }}.conf"
+
+- name: asgi stop supervisor for app
+  become: true
+  command: service supervisor stop
+
+
+- name: asgi pause for restart to take effect
+  pause: 
+    seconds: 2
+
+- name: asgi source env then start supervisor for app
+  become: true
+  shell: source "/home/{{deploy_user}}/.virtualenvs/{{ app_name }}/bin/activate" && service supervisor start
+  args:
+    executable: /bin/bash
+
+
+- name: asgi restart nginx
+  become: true
+  service: 
+    name: nginx 
+    state: restarted

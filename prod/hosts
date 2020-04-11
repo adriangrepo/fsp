@@ -1,0 +1,2 @@
+[common]
+server_ip ansible_port=ssh_port
