@@ -57,6 +57,6 @@ service ssh reload
 
 #### Playbooks
 
-setup varibales in prod/group_vars/all.yml
+setup variables in prod/group_vars/all.yml
 
 run ./deploy_prod.sh
