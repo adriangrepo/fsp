@@ -15,6 +15,8 @@ ASGI server
 MongoDB 
 (see playbook in original book for PostgreSQL)
 
+Contains Ansible deployment playbooks to automate setup of a remote webserver
+
 ## Process:
 
 Setup VPS (eg AWS/Digitalocean/Linode)
