@@ -9,11 +9,11 @@ book. (https://gumroad.com/l/WOvyt).
 
 Modified to use:
 
-Python 3 (3.7)
-Ansible 2 (2.9)
-ASGI server 
-MongoDB 
-(see playbook in original book for PostgreSQL)
+- Python 3 (3.7)
+- Ansible 2 (2.9)
+- ASGI server 
+- MongoDB 
+- (see playbook in original book for PostgreSQL)
 
 Contains Ansible deployment playbooks to automate setup of a remote webserver
 
